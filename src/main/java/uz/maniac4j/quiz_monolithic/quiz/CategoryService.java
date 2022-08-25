@@ -56,7 +56,6 @@ public class CategoryService {
 
     public Response<?> all(User user){
 
-
         for (Role role : user.getRoles()) {
             // If user is admin, response contains all categories
             if (role.getRoleName().equals(RoleName.ADMIN)) return Payload.ok(categoryRepository.findAll());
@@ -67,6 +66,7 @@ public class CategoryService {
         }
         return Payload.ok(categoryRepository.findAllByOrganization(user.getOrganization()));
     }
+
 
 
 

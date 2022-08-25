@@ -2,11 +2,14 @@ package uz.maniac4j.quiz_monolithic.quiz;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import uz.maniac4j.quiz_monolithic.payload.Payload;
+import uz.maniac4j.quiz_monolithic.payload.Response;
 import uz.maniac4j.quiz_monolithic.quiz.dto.AnswerDtoImpl;
 import uz.maniac4j.quiz_monolithic.quiz.dto.QuizDto;
 import uz.maniac4j.quiz_monolithic.quiz.model.Answer;
 import uz.maniac4j.quiz_monolithic.quiz.model.Category;
 import uz.maniac4j.quiz_monolithic.quiz.model.Quiz;
+import uz.maniac4j.quiz_monolithic.user.User;
 
 
 import java.util.List;
@@ -25,6 +28,61 @@ public class QuizService {
         this.categoryRepository = categoryRepository;
         this.answerRepository = answerRepository;
     }
+
+    public Response<?> add(QuizDto dto, User user){
+
+        try {
+            List<Category> categoryList = categoryRepository.findAllByOrganization(user.getOrganization());
+            boolean idExists = categoryList.stream().anyMatch(item -> dto.getId().equals(item.getId()));
+            if (!idExists) return Payload.badRequest();
+            Quiz quiz = Quiz
+                    .builder()
+                    .rate(dto.getRate())
+                    .title(dto.getTitle())
+                    .text(dto.getText())
+                    .category(categoryList.stream().filter(c->c.getId() == dto.getId()).findFirst().get())
+                    .build();
+            quiz = quizRepository.save(quiz);
+            return Payload.ok(quiz);
+        }catch (Exception e){
+            e.printStackTrace();
+            return Payload.badRequest();
+        }
+
+
+    }
+
+    public Response<?> one(long id,User user){
+        try {
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return Payload.badRequest();
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public Quiz one(Long id){
         Optional<Quiz> quiz = quizRepository.findById(id);
