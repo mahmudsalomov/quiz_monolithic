@@ -1,9 +1,8 @@
-package uz.maniac4j.quiz_monolithic.quiz;
+package uz.maniac4j.quiz_monolithic.category;
 
 import org.springframework.stereotype.Service;
 import uz.maniac4j.quiz_monolithic.payload.Payload;
 import uz.maniac4j.quiz_monolithic.payload.Response;
-import uz.maniac4j.quiz_monolithic.quiz.model.Category;
 import uz.maniac4j.quiz_monolithic.user.Role;
 import uz.maniac4j.quiz_monolithic.user.RoleName;
 import uz.maniac4j.quiz_monolithic.user.User;

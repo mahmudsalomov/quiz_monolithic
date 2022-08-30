@@ -1,6 +1,7 @@
-package uz.maniac4j.quiz_monolithic.quiz.model;
+package uz.maniac4j.quiz_monolithic.block;
 
 import lombok.*;
+import uz.maniac4j.quiz_monolithic.quiz.Quiz;
 import uz.maniac4j.quiz_monolithic.template.EntityLong;
 
 import javax.persistence.*;

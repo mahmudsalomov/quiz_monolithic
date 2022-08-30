@@ -1,8 +1,7 @@
-package uz.maniac4j.quiz_monolithic.quiz;
+package uz.maniac4j.quiz_monolithic.category;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import uz.maniac4j.quiz_monolithic.organization.Organization;
-import uz.maniac4j.quiz_monolithic.quiz.model.Category;
 
 import java.util.List;
 import java.util.Optional;

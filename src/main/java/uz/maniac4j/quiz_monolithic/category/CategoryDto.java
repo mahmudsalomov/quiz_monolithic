@@ -1,4 +1,4 @@
-package uz.maniac4j.quiz_monolithic.quiz.dto;
+package uz.maniac4j.quiz_monolithic.category;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

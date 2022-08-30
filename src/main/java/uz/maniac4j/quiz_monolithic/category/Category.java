@@ -1,4 +1,4 @@
-package uz.maniac4j.quiz_monolithic.quiz.model;
+package uz.maniac4j.quiz_monolithic.category;
 
 import lombok.*;
 import uz.maniac4j.quiz_monolithic.organization.Organization;

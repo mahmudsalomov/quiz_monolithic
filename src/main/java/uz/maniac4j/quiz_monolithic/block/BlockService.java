@@ -1,12 +1,11 @@
-package uz.maniac4j.quiz_monolithic.quiz;
+package uz.maniac4j.quiz_monolithic.block;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import uz.maniac4j.quiz_monolithic.quiz.dto.BlockDto;
-import uz.maniac4j.quiz_monolithic.quiz.dto.QuizDto;
-import uz.maniac4j.quiz_monolithic.quiz.model.Block;
-import uz.maniac4j.quiz_monolithic.quiz.model.BlockType;
-import uz.maniac4j.quiz_monolithic.quiz.model.Quiz;
+import uz.maniac4j.quiz_monolithic.category.CategoryRepository;
+import uz.maniac4j.quiz_monolithic.quiz.QuizRepository;
+import uz.maniac4j.quiz_monolithic.quiz.QuizDto;
+import uz.maniac4j.quiz_monolithic.quiz.Quiz;
 
 
 import java.util.HashSet;
@@ -20,14 +19,12 @@ public class BlockService {
     private final BlocksRepository blocksRepository;
     private final QuizRepository quizRepository;
     private final CategoryRepository categoryRepository;
-    private final AnswerRepository answerRepository;
 
     @Autowired
-    public BlockService(BlocksRepository blocksRepository, QuizRepository quizRepository, CategoryRepository categoryRepository, AnswerRepository answerRepository) {
+    public BlockService(BlocksRepository blocksRepository, QuizRepository quizRepository, CategoryRepository categoryRepository) {
         this.blocksRepository = blocksRepository;
         this.quizRepository = quizRepository;
         this.categoryRepository = categoryRepository;
-        this.answerRepository = answerRepository;
     }
 
 
