@@ -1,6 +1,8 @@
 package uz.maniac4j.quiz_monolithic.category;
 
 import org.springframework.stereotype.Service;
+import uz.maniac4j.quiz_monolithic.organization.Organization;
+import uz.maniac4j.quiz_monolithic.organization.OrganizationRepository;
 import uz.maniac4j.quiz_monolithic.payload.Payload;
 import uz.maniac4j.quiz_monolithic.payload.Response;
 import uz.maniac4j.quiz_monolithic.user.Role;
@@ -14,9 +16,11 @@ import java.util.Optional;
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final OrganizationRepository organizationRepository;
 
-    public CategoryService(CategoryRepository categoryRepository) {
+    public CategoryService(CategoryRepository categoryRepository, OrganizationRepository organizationRepository) {
         this.categoryRepository = categoryRepository;
+        this.organizationRepository = organizationRepository;
     }
 
 
@@ -95,6 +99,15 @@ public class CategoryService {
             return categoryRepository.save(category);
         }
         return null;
+    }
+
+
+    public Response<?> edit(CategoryDto dto, User user){
+//        Optional<Organization> organization = organizationRepository.findById(dto.getId());
+        Optional<Category> category = categoryRepository.findById(dto.getId());
+        if (category.isPresent()&&category.get().getOrganization().equals(user.getOrganization())) return Payload.ok(edit(category.get()));
+
+        return Payload.badRequest();
     }
 
     public void delete(Long id){

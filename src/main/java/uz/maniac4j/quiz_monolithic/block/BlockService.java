@@ -73,7 +73,7 @@ public class BlockService {
 
     public Block edit(Block block){
         if (block.getId() == null) return null;
-            Optional<Block> update = blocksRepository.findById(block.getId());
+        Optional<Block> update = blocksRepository.findById(block.getId());
         if (update.isPresent()){
             Block blocks = update.get();
             blocks.edit(block);
