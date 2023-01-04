@@ -33,12 +33,14 @@ public class UserService {
     }
 
     public Response<?> register(RegistrationDto dto){
+        if (userRepository.existsByEmail(dto.getEmail())) return Payload.badRequest("Email already registered");
+        if (userRepository.existsByUsername(dto.getUsername())) return Payload.badRequest("Username already exists");
         User user = User
                 .builder()
                 .email(dto.getEmail())
                 .fio(dto.getFio())
                 .username(dto.getUsername())
-                .password(dto.getUsername())
+                .password(dto.getPassword())
                 .build();
         try {
             user.setCode(CodeGenerator.generate());
