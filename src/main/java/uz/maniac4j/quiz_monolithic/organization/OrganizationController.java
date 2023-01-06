@@ -8,6 +8,7 @@ import uz.maniac4j.quiz_monolithic.user.User;
 
 @RequestMapping("api/organization")
 @RestController
+@CrossOrigin
 public class OrganizationController {
 
     private final OrganizationService organizationService;

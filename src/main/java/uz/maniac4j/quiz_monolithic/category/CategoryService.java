@@ -24,8 +24,9 @@ public class CategoryService {
     }
 
 
-    public Response<?> add(Category category, User user){
+    public Response<?> add(CategoryDto dto, User user){
         try {
+            Category category= Category.builder().name(dto.getName()).description(dto.getDescription()).build();
             // If user is participant, adding category is not allowed
             for (Role role : user.getRoles()) {
                 if (role.getRoleName().equals(RoleName.PARTICIPANT)) return Payload.badRequest();

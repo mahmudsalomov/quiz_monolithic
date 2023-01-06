@@ -7,6 +7,7 @@ import uz.maniac4j.quiz_monolithic.user.User;
 
 @RestController
 @RequestMapping("api/quiz")
+@CrossOrigin
 public class QuizController {
 
     private final QuizService quizService;

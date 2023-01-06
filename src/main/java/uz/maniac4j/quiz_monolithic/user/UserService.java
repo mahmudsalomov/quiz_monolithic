@@ -43,12 +43,21 @@ public class UserService {
                 .password(dto.getPassword())
                 .build();
         try {
+            Organization organization = Organization
+                    .builder()
+                    .name(dto.getOrganizationName())
+                    .ownerId(user.getId())
+                    .build();
+            organization=organizationRepository.save(organization);
+
             user.setCode(CodeGenerator.generate());
             user.setActive(true);
 
             user.setPassword(passwordEncoder.encode(user.getPassword()));
 
             Optional<Role> optionalRole = roleRepository.findByRoleName(RoleName.ORGANIZATION_ADMIN);
+
+            user.setOrganization(organization);
 
             if (optionalRole.isPresent()){
                 user.setRoles(Collections.singleton(optionalRole.get()));
@@ -60,13 +69,12 @@ public class UserService {
             user=userRepository.save(user);
             boolean b = emailService.sendCode(user);
 
-            Organization organization = Organization
-                    .builder()
-                    .name(dto.getOrganizationName())
-                    .ownerId(user.getId())
-                    .build();
+
+            organization.setOwnerId(user.getId());
             organization=organizationRepository.save(organization);
 
+            ;
+//            user=userRepository.save(user);
             return b? Payload.ok("Confirmation code has been sent to your email",user):Payload.conflict();
         }catch (Exception e){
             e.printStackTrace();

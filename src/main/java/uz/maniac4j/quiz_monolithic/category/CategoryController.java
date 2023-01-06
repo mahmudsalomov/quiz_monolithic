@@ -9,6 +9,7 @@ import uz.maniac4j.quiz_monolithic.user.User;
 
 @RestController
 @RequestMapping("api/category")
+@CrossOrigin
 public class CategoryController {
     private final CategoryService categoryService;
     private final CategoryRepository categoryRepository;
@@ -21,7 +22,7 @@ public class CategoryController {
     }
 
     @PostMapping("/add")
-    public HttpEntity<?> add(Category category, @CurrentUser User user) {
+    public HttpEntity<?> add(@RequestBody CategoryDto category, @CurrentUser User user) {
         return categoryService.add(category, user).response();
     }
 
@@ -31,7 +32,7 @@ public class CategoryController {
     }
 
     @PutMapping("/edit")
-    public HttpEntity<?> edit(CategoryDto category, @CurrentUser User user) {
+    public HttpEntity<?> edit(@RequestBody CategoryDto category, @CurrentUser User user) {
         return categoryService.edit(category, user).response();
     }
 }

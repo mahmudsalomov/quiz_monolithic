@@ -20,7 +20,7 @@ public class Category extends EntityLong {
     private String name;
     @Column(columnDefinition = "text")
     private String description;
-    @NotNull
+//    @NotNull
     @ManyToOne
 //    @Column(unique = true)
     private Organization organization;
