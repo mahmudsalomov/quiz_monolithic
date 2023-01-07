@@ -26,6 +26,7 @@ public class CategoryService {
 
     public Response<?> add(CategoryDto dto, User user){
         try {
+            if (user==null) return Payload.unauthorized();
             Category category= Category.builder().name(dto.getName()).description(dto.getDescription()).build();
             // If user is participant, adding category is not allowed
             for (Role role : user.getRoles()) {
@@ -59,7 +60,7 @@ public class CategoryService {
 
 
     public Response<?> all(User user){
-
+        if (user==null) return Payload.unauthorized();
         for (Role role : user.getRoles()) {
             // If user is admin, response contains all categories
             if (role.getRoleName().equals(RoleName.ADMIN)) return Payload.ok(categoryRepository.findAll());

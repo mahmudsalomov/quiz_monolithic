@@ -80,4 +80,14 @@ public class Quiz extends EntityLong {
         blocks = quiz.blocks;
 
     }
+
+    public void editing(QuizDto quiz){
+        title = quiz.getTitle();
+        text = quiz.getText();
+        answer = quiz.getAnswer();
+        a = quiz.getA();
+        b = quiz.getB();
+        c = quiz.getC();
+        d = quiz.getD();
+    }
 }

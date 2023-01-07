@@ -12,6 +12,7 @@ import uz.maniac4j.quiz_monolithic.user.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -27,10 +28,10 @@ public class QuizService {
     }
 
     public Response<?> add(QuizDto dto, User user){
-
+        if (user==null) return Payload.unauthorized();
         try {
             List<Category> categoryList = categoryRepository.findAllByOrganization(user.getOrganization());
-            boolean idExists = categoryList.stream().anyMatch(item -> dto.getId().equals(item.getId()));
+            boolean idExists = categoryList.stream().anyMatch(item -> dto.getCategory().getId().equals(item.getId()));
             if (!idExists) return Payload.badRequest();
             Quiz quiz = Quiz
                     .builder()
@@ -41,7 +42,7 @@ public class QuizService {
                     .b(dto.getB())
                     .c(dto.getC())
                     .d(dto.getD())
-                    .category(categoryList.stream().filter(c->c.getId() == dto.getId()).findFirst().get())
+                    .category(categoryList.stream().filter(c-> Objects.equals(c.getId(), dto.getCategory().getId())).findFirst().get())
                     .build();
             quiz = quizRepository.save(quiz);
             return Payload.ok(quiz);
@@ -72,6 +73,7 @@ public class QuizService {
 
     public Response<?> all(User user){
         try {
+            if (user==null) return Payload.unauthorized();
             if(user.getRoles().stream().anyMatch(item -> RoleName.ADMIN.equals(item.getRoleName()))) return Payload.ok(quizRepository.findAll());
             List<Category> categoryList = categoryRepository.findAllByOrganization(user.getOrganization());
             List<Quiz> quizzes=new ArrayList<>();
@@ -154,14 +156,44 @@ public class QuizService {
     }
 
     public Quiz edit(Quiz quiz){
-        if (quiz.getId() == null) return null;
         Optional<Quiz> update = quizRepository.findById(quiz.getId());
         if (update.isPresent()){
-            Quiz quizies = update.get();
-            quizies.editing(quizies);
-            return quizRepository.save(quizies);
+
+
+            Quiz q = update.get();
+            q.editing(q);
+            return quizRepository.save(q);
         }
         return null;
+    }
+
+    public Response<?> edit(QuizDto quiz,User user){
+        try {
+
+
+
+            if (user==null) return Payload.unauthorized();
+            if (quiz.getId() == null) return Payload.badRequest();
+
+            Optional<Quiz> update = quizRepository.findById(quiz.getId());
+
+            if (update.isEmpty()) return Payload.badRequest();
+
+            if (!update.get().getCategory().getOrganization().equals(user.getOrganization())) return Payload.badRequest();
+
+            if (!Objects.equals(update.get().getCategory().getId(), quiz.getCategory().getId())){
+                Optional<Category> category = categoryRepository.findByIdAndOrganization(quiz.getCategory().getId(),user.getOrganization());
+                if (category.isEmpty()) return Payload.badRequest();
+                update.get().setCategory(category.get());
+            }
+
+            update.get().editing(quiz);
+
+            return Payload.ok(quizRepository.save(update.get()));
+
+        }catch (Exception e){
+            return Payload.conflict();
+        }
     }
 
     public Boolean check(Long quizId, AnswerEnum answer) {

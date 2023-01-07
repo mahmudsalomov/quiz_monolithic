@@ -21,6 +21,10 @@ public class QuizController {
         return quizService.add(quizDto,user).response();
     }
 
+    @PostMapping("/edit")
+    public HttpEntity<?> edit(@RequestBody QuizDto quizDto, @CurrentUser User user){
+        return quizService.edit(quizDto,user).response();
+    }
 
 //    @GetMapping("/one/{}")
 //    public HttpEntity<?> one(@PathVariable long id,@CurrentUser User user){
