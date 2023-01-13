@@ -3,6 +3,8 @@ package uz.maniac4j.quiz_monolithic.block;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uz.maniac4j.quiz_monolithic.category.CategoryRepository;
+import uz.maniac4j.quiz_monolithic.payload.Payload;
+import uz.maniac4j.quiz_monolithic.payload.Response;
 import uz.maniac4j.quiz_monolithic.quiz.QuizRepository;
 import uz.maniac4j.quiz_monolithic.quiz.QuizDto;
 import uz.maniac4j.quiz_monolithic.quiz.Quiz;
@@ -43,7 +45,7 @@ public class BlockService {
     }
 
 
-    public Block add(BlockDto dto){
+    public Response<?> add(BlockDto dto){
         Set<Quiz> quizzes=new HashSet<>();
         for (QuizDto quizDto:dto.getQuizList()) {
             Optional<Quiz> quiz = quizRepository.findById(quizDto.getId());
@@ -60,8 +62,11 @@ public class BlockService {
                 .limit(dto.getLimit())
                 .organization_id(dto.getOrganization_id())
                 .build();
-        return blocksRepository.save(block);
+//        return blocksRepository.save(block);
+        return Payload.ok(blocksRepository.save(block));
     }
+
+
 
 
 
