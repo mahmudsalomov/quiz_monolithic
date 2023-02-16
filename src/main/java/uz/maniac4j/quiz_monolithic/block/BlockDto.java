@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class BlockDto {
+    private Long id;
     private String name;
     private String description;
     private List<QuizDto> quizList=new ArrayList<>();

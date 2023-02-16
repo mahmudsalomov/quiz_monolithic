@@ -17,8 +17,8 @@ public class ExamController {
         this.examService = examService;
     }
 
-    @PostMapping("/add")
-    public HttpEntity<?> add(ExamDto dto){
-        return examService.add(dto).responce();
-    }
+//    @PostMapping("/add")
+//    public HttpEntity<?> add(ExamDto dto){
+//        return examService.add(dto).responce();
+//    }
 }

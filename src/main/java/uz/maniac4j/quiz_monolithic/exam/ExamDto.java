@@ -1,33 +1,27 @@
 package uz.maniac4j.quiz_monolithic.exam;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import uz.maniac4j.quiz_monolithic.block.Block;
-import uz.maniac4j.quiz_monolithic.template.EntityLong;
+import uz.maniac4j.quiz_monolithic.block.BlockDto;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import java.sql.Timestamp;
-import java.util.Date;
-
-@Getter
-@Setter
-@ToString
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity
-public class Exam extends EntityLong {
-
+public class ExamDto {
     private String name;
 
-    @Column(columnDefinition = "text")
     private String description;
-    @ManyToOne
-    private Block block;
+
+    private BlockDto block;
 
     private Timestamp startDate;
 
     private Timestamp endDate;
-
 }

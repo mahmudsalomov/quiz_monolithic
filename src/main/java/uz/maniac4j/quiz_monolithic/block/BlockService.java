@@ -18,30 +18,30 @@ import java.util.Set;
 @Service
 public class BlockService {
 
-    private final BlocksRepository blocksRepository;
+    private final BlockRepository blockRepository;
     private final QuizRepository quizRepository;
     private final CategoryRepository categoryRepository;
 
     @Autowired
-    public BlockService(BlocksRepository blocksRepository, QuizRepository quizRepository, CategoryRepository categoryRepository) {
-        this.blocksRepository = blocksRepository;
+    public BlockService(BlockRepository blockRepository, QuizRepository quizRepository, CategoryRepository categoryRepository) {
+        this.blockRepository = blockRepository;
         this.quizRepository = quizRepository;
         this.categoryRepository = categoryRepository;
     }
 
 
     public List<Block> all(){
-        return blocksRepository.findAll();
+        return blockRepository.findAll();
     }
 
     public Block one(Long id){
-        return blocksRepository.getById(id);
+        return blockRepository.getById(id);
     }
 
 
     public Block add(Block block){
         if (block.getId()== null) return null;
-        return blocksRepository.save(block);
+        return blockRepository.save(block);
     }
 
 
@@ -63,7 +63,7 @@ public class BlockService {
                 .organization_id(dto.getOrganization_id())
                 .build();
 //        return blocksRepository.save(block);
-        return Payload.ok(blocksRepository.save(block));
+        return Payload.ok(blockRepository.save(block));
     }
 
 
@@ -73,16 +73,16 @@ public class BlockService {
 
 
     public void delete(Long id){
-        if (id != null) blocksRepository.deleteById(id);
+        if (id != null) blockRepository.deleteById(id);
     }
 
     public Block edit(Block block){
         if (block.getId() == null) return null;
-        Optional<Block> update = blocksRepository.findById(block.getId());
+        Optional<Block> update = blockRepository.findById(block.getId());
         if (update.isPresent()){
             Block blocks = update.get();
             blocks.edit(block);
-            return blocksRepository.save(block);
+            return blockRepository.save(block);
         }
         return null;
     }
@@ -90,7 +90,7 @@ public class BlockService {
 
     // Check block id and organization id is exists
     public boolean existsByBlockAndOrganization(long block_id, long organization_id){
-        Optional<Block> optionalBlock = blocksRepository.findById(block_id);
+        Optional<Block> optionalBlock = blockRepository.findById(block_id);
         if (optionalBlock.isEmpty()) return false;
         return optionalBlock.get().getOrganization_id() == organization_id;
     }
