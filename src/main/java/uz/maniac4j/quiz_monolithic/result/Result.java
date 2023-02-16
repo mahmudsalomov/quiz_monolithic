@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 @Setter
 @ToString
 @AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 @Builder
 @Entity
 public class Result extends EntityLong {

@@ -1,4 +1,6 @@
 package uz.maniac4j.quiz_monolithic.attempt;
 
-public interface AttemptRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface AttemptRepository extends JpaRepository<Attempt, Long> {
 }
